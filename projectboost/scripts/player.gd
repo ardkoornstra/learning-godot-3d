@@ -14,6 +14,12 @@ func _process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if body.is_in_group("Goal"):
-		print("OwO")
+		win(body.filePath)
 	elif body.is_in_group("Hazard"):
-		print("aaaaaaaaAAAAAAAAAAAAAAAAA")
+		crash()
+
+func crash() -> void:
+	get_tree().reload_current_scene.call_deferred()
+
+func win(nextLevel: String) -> void:
+	get_tree().change_scene_to_file(nextLevel)
