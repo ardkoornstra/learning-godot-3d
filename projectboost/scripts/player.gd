@@ -3,6 +3,8 @@ extends RigidBody3D
 @export var thrust: float = 1000.0
 @export var torqueThrust: float = 100.0
 
+var is_transitioning: bool = false
+
 func _process(delta: float) -> void:
 	if Input.is_action_pressed("Boost"):
 		apply_central_force(basis.y * delta * 1000.0)
@@ -13,13 +15,24 @@ func _process(delta: float) -> void:
 
 
 func _on_body_entered(body: Node) -> void:
-	if body.is_in_group("Goal"):
-		win(body.filePath)
-	elif body.is_in_group("Hazard"):
-		crash()
+	if !is_transitioning:
+		if body.is_in_group("Goal"):
+			win(body.filePath)
+		elif body.is_in_group("Hazard"):
+			crash()
 
 func crash() -> void:
-	get_tree().reload_current_scene.call_deferred()
+	print("aaaaAAAAAAAAA")
+	set_process(false)
+	is_transitioning = true
+	var tween = create_tween()
+	tween.tween_interval(1.0)
+	tween.tween_callback(get_tree().reload_current_scene)
 
 func win(nextLevel: String) -> void:
-	get_tree().change_scene_to_file(nextLevel)
+	print("OwO")
+	set_process(false)
+	is_transitioning = true
+	var tween = create_tween()
+	tween.tween_interval(1.0)
+	tween.tween_callback(get_tree().change_scene_to_file.bind(nextLevel))
