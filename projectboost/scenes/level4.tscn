@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://scripts/landing_pad.gd" id="1_vcte4"]
 [ext_resource type="PackedScene" uid="uid://b2la63thchrmk" path="res://scenes/player.tscn" id="2_51a8i"]
 [ext_resource type="PackedScene" uid="uid://nc55fsqvs021" path="res://scenes/moving_hazard.tscn" id="3_tjia7"]
+[ext_resource type="PackedScene" uid="uid://c867aurvoof61" path="res://scenes/ground.tscn" id="4_vc3hi"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gy0wv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -16,9 +17,6 @@ background_mode = 2
 sky = SubResource("Sky_xgv8s")
 tonemap_mode = 2
 glow_enabled = true
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_64cqk"]
-albedo_color = Color(0.37, 0.25345, 0.1702, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4j6op"]
 albedo_color = Color(0.2701, 0.50005, 0.73, 1)
@@ -35,12 +33,6 @@ environment = SubResource("Environment_c2vxt")
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
 
-[node name="Ground" type="CSGBox3D" parent="." groups=["Hazard"]]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -4, 0)
-use_collision = true
-size = Vector3(30, 8, 5)
-material = SubResource("StandardMaterial3D_64cqk")
-
 [node name="LaunchPad" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 0.2, 0)
 use_collision = true
@@ -56,9 +48,11 @@ script = ExtResource("1_vcte4")
 filePath = "res://scenes/level.tscn"
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 4, 8)
+transform = Transform3D(1, 0, 0, 0, 0.99863, 0.052336, 0, -0.052336, 0.99863, 0, 5, 9)
 
 [node name="Player" parent="." instance=ExtResource("2_51a8i")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -7, 1.4, 0)
 
 [node name="MovingHazard" parent="." instance=ExtResource("3_tjia7")]
+
+[node name="Ground" parent="." instance=ExtResource("4_vc3hi")]
